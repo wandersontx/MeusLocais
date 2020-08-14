@@ -1,0 +1,21 @@
+{
+    "name": "wanderson/meus_locais",
+    "description": "Registre seus locais favoritos do brasil",
+    "authors": [
+        {
+            "name": "wandersontx",
+            "email": "wandersonh89@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "jarouche/viacep": "^1.2"
+    },
+    "autoload":{
+        "psr-4":{
+            "Controller\\":"Controller/",
+            "Model\\":"Model/",
+            "View\\":"View/"
+        }
+    }
+}
