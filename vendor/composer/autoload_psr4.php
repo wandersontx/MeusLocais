@@ -9,5 +9,6 @@ return array(
     'View\\' => array($baseDir . '/View'),
     'Model\\' => array($baseDir . '/Model'),
     'Jarouche\\ViaCEP\\' => array($vendorDir . '/jarouche/viacep/src'),
+    'GUMP\\' => array($vendorDir . '/wixel/gump/src'),
     'Controller\\' => array($baseDir . '/Controller'),
 );

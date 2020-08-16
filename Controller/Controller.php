@@ -17,8 +17,8 @@ class Controller{
 		 	case '/cadastro':
 		 		require 'View/TelaCadastro.php';
 		 	break;
-		 	case '/buscacep':
-		 		echo "buscando cep";
+		 	case '':
+		 		
 		 	break;
 		 	case '':
 		 		# code...

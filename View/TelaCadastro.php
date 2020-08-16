@@ -18,7 +18,7 @@
 </head>
 <body style="margin-top: 50px;">
 
-	<form>
+	<form method="get" action="" onsubmit="return  verificarCepVazio(this)">
 		
 		<div class="container">	
 			<h2 class="text-primary display-2 text-sm-center">Cadastro</h2>			
@@ -30,11 +30,9 @@
 			<hr>
 			<div class="row form-group">
 				<div class="col-sm-3">
-					<input type="text" name="cep" id="cep" maxlength="9" placeholder="Digite o cep para consulta" class="form-control"  value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['cep'] : '' ?>">
+					<input type="text" name="cep" id="cep" maxlength="9" placeholder="Digite o cep para consulta" class="form-control"  value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['cep'] : '' ?>" onblur="consultarCep()">
 				</div>
-				<div class="col-sm-3">
-					<a class="btn btn-info" onclick="consultarCep()">Buscar endereco</a>
-				</div>
+				
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-6">
@@ -92,7 +90,7 @@
 					<input type="date" name="data" class="form-control">
 				</div>
 			</div>
-			<button class="btn btn-block btn-info" >Cadastrar</button>
+			<button class="btn btn-block btn-info">Cadastrar</button>
 		</div>
 	</form>
 	<script type="text/javascript">
@@ -111,10 +109,21 @@
 				alert('CEP invalido!\nFormatos suportado:\n73402-042\n73402042')
 				document.getElementById('cep').value = ''
 			}
-			else{				 	
+			else{
+				if(cep2 != '')				 	
 				 window.location.href='/cadastro?busca=true&cep='+cep2
 			}
 		}
+
+		function verificarCepVazio(field){			
+			if(field.cep.value ==''){
+				alert('Favor informar cep para consulta')
+				return false
+			}
+
+		
+		}
+		
 		
 	</script>
 
@@ -149,5 +158,28 @@
   </div>
 </div>
 	<!-- fim modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="cepVazio" tabindex="-1" aria-labelledby="modal2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal2">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<!-- fim modal -->
+
 </body>
 </html>

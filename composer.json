@@ -9,7 +9,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "jarouche/viacep": "^1.2"
+        "jarouche/viacep": "^1.2",
+        "wixel/gump": "^1.11"
     },
     "autoload":{
         "psr-4":{

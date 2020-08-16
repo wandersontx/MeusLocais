@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e
 {
+    public static $files = array (
+        'da253f61703e9c22a5a34f228526f05a' => __DIR__ . '/..' . '/wixel/gump/gump.class.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'V' => 
         array (
@@ -18,6 +22,10 @@ class ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e
         'J' => 
         array (
             'Jarouche\\ViaCEP\\' => 16,
+        ),
+        'G' => 
+        array (
+            'GUMP\\' => 5,
         ),
         'C' => 
         array (
@@ -37,6 +45,10 @@ class ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e
         'Jarouche\\ViaCEP\\' => 
         array (
             0 => __DIR__ . '/..' . '/jarouche/viacep/src',
+        ),
+        'GUMP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wixel/gump/src',
         ),
         'Controller\\' => 
         array (
