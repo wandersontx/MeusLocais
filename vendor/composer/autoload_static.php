@@ -56,11 +56,31 @@ class ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e
         ),
     );
 
+    public static $classMap = array (
+        'Controller\\Controller' => __DIR__ . '/../..' . '/Controller/Controller.php',
+        'Controller\\MeuLocal' => __DIR__ . '/../..' . '/Controller/MeuLocal.php',
+        'Controller\\Service\\Service' => __DIR__ . '/../..' . '/Controller/Service/Service.php',
+        'GUMP\\ArrayHelpers' => __DIR__ . '/..' . '/wixel/gump/src/ArrayHelpers.php',
+        'GUMP\\EnvHelpers' => __DIR__ . '/..' . '/wixel/gump/src/EnvHelpers.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPJSON' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEPJSON.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPJSONP' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEPJSONP.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPLogradouro' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaVIaCEPLogradouro.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPPiped' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEPPiped.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPQuerty' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEPQuerty.php',
+        'Jarouche\\ViaCEP\\BuscaViaCEPXML' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEPXML.php',
+        'Jarouche\\ViaCEP\\HelperViaCep' => __DIR__ . '/..' . '/jarouche/viacep/src/HelperViaCep.php',
+        'Jarouche\\ViaCEP\\ViaCEPInterface' => __DIR__ . '/..' . '/jarouche/viacep/src/ViaCEPInterface.php',
+        'Jarouche\\ViaCEP\\buscaViaCEP' => __DIR__ . '/..' . '/jarouche/viacep/src/BuscaViaCEP.php',
+        'Model\\Database' => __DIR__ . '/../..' . '/Model/Database.php',
+        'Model\\GetCep' => __DIR__ . '/../..' . '/Model/GetCep.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9ee606a48ab62c13089498a7fa7adc0e::$classMap;
 
         }, null, ClassLoader::class);
     }

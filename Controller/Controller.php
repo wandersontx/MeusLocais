@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Controller\Service\Service;
+
 class Controller{
 
 	protected function getURL(){
@@ -20,8 +22,10 @@ class Controller{
 		 	case '':
 		 		
 		 	break;
-		 	case '':
-		 		# code...
+		 	case '/salvar':
+		 		$service = new Service;
+		 		$service->save($_POST);
+		 		
 		 	break;
 		 	
 		 	
