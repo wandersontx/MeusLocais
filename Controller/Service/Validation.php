@@ -7,24 +7,30 @@
 			array_merge($dados, $_FILES),
 			[
 		    	'nome'		 => ['required'],
-		    	'cep'		 => ['required','min_len'=> [8]],
+		    	'cep'		 => ['required'],
 		    	'logradouro' => ['required'],
 		    	'bairro' 	 => ['required'],
 		    	'uf' 		 => ['required'],
-		    	'cidade'	 => ['required', 'min_len'=> [3]],
+		    	'cidade'	 => ['required'],
 		    	'data' 		 => ['required'],
 	    	
 			],
 			[
-	    		'logradouro' => ['required' => 'Fill the Username field please.'],
+	    		'nome' => ['required' => 'Campo Obrigatorio'],
+	    		'cep' => ['required' => 'Campo Obrigatorio'],
+	    		'logradouro' => ['required' => 'Campo Obrigatorio'],
+	    		'bairro' => ['required' => 'Campo Obrigatorio'],
+	    		'uf' => ['required' => 'Campo Obrigatorio'],
+	    		'cidade' => ['required' => 'Campo Obrigatorio'],
+	    		'data' => ['required' => 'Campo Obrigatorio'],
 	    	 
 			]
 		);
 
 		if ($is_valid === true) {
-		    echo "Todos os dados foram preenchidos corretamente";
+		    return true;
 		} else {
-		    var_dump($is_valid); // array of error messages
+		    return false;
 		}
 
 
