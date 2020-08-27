@@ -21,15 +21,16 @@
 	
 
 	<script src="/View/jquery.mask.min.js"></script>
+	<script src="/View/eventos.js"></script>
 
 </head>
 <body style="margin-top: 50px;">
 
 	<form method="post" action="/salvar" onsubmit="return verificarCamposPreenchidos(this)">
-		
+		<a href="/" class="ml-5 text-warning">Voltar </a>
 		<div class="container">	
 			<h2 class="text-primary display-2 text-sm-center">Cadastro</h2>			
-			<div class="row form-group">
+			<div class="row form-group">				
 				<div class="col-sm-12">
 					<label for="nome" class="text-info">Nome do local visitado</label>
 					<input type="text" name="nome" id="nome" onblur="fieldEmpty(this)" maxlength="100"  class="form-control" value="<?= isset($_GET['busca']) && !empty($_GET['nome']) ? $_GET['nome'] : '' ?>">
@@ -79,7 +80,10 @@
 				</div>
 			</div>
 			<button class="btn btn-block btn-info">Cadastrar</button>
+
 		</div>
+
+
 	</form>
 
 	<script type="text/javascript">	
@@ -163,7 +167,7 @@
 				let nome = document.getElementById('nome').value
 				nome = nome != '' ? nome : ''
 				console.log(nome)		 	
-				 window.location.href='/cadastro?busca=true&cep='+cep2+'&nome='+nome
+				 window.location.href='/cadastro?acao=cep&cep='+cep2+'&nome='+nome
 				 
 				 
 				

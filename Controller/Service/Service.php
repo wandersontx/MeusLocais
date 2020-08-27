@@ -4,6 +4,7 @@
 namespace Controller\Service;
 use Controller\MeuLocal;
 use Model\Database;
+use Model\GetCep;
 require "Validation.php";
 
 
@@ -38,9 +39,8 @@ class Service
 			
 			$row =  $stmt->execute();
 
-			if($row > 1){
-				echo "Dados salvos com sucesso";
-				header("Location: /cadastro");
+			if($row > 0){
+				header("Location: /");
 			}
 
 		}	
@@ -53,13 +53,40 @@ class Service
 	}
 
 	public function findAll()
-	{
-
+	{	
+		try{
+		$this->db = Database::getConnection();
+		$query = "select id, data, uf, nome from locais order by data desc";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();		
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e){
+			 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+		}
 	}
 
 	public function findById($id)
 	{
 
+	}
+
+	public function delete($id)
+	{
+		try{
+			$this->db = Database::getConnection();
+			$query = "delete from locais where id = ".$id;
+			$this->db->exec($query);
+			header("Location: /");	
+
+		}
+		catch(PDOException $e){
+			die("ERROR: Could not connect. ".$e->getMessage());
+		}
+	}
+
+	public function buscarEnderecoPorCep($cep){
+		$getCep = new GetCep;
 	}
 
 		
