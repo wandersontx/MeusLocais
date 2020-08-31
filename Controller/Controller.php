@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Controller\Service\Service;
+use Model\GetCep;
 
 class Controller{
 
@@ -27,6 +28,13 @@ class Controller{
 		 		$service = new Service;
 		 		$service->delete($_GET['id']);
 		 	break;
+		 	case '/update':
+		 		$service = new Service;
+		 		$service->update($_POST);
+		 	break;
+		 	case '/cep':		 		
+		 		$cep = new GetCep;
+		 		$cep->getEndereco($_GET['cep']);
 		 		 	
 		 } 
 	}

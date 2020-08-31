@@ -7,6 +7,16 @@ $(document).ready(function (){
 		$('#modal_remover').modal('show');
 	})
 
+	$("#cep").mask('00000000')
+
+
 });
+
+
+
+function pesquisaCepGoogle(){
+	let text = "cep "+document.getElementById('local_google').value
+	console.log(text)
+}
 
 
