@@ -195,8 +195,7 @@
 					document.getElementById('cep').value = ''
 					return false
 				}
-				return true
-				
+				return true				
 			}	
 
 			function consultarCep(){						
@@ -231,7 +230,7 @@
 
 
 
-		function validarUf(uf){						
+		function validarUf(uf){							
 			let estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO" ];
 			let findUf = estados.indexOf(uf.value.toUpperCase())
 			let regex = /[0-9]/;
