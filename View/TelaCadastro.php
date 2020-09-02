@@ -1,9 +1,24 @@
 <?php
-	use Model\GetCep;
-	$getCep = new GetCep;
+	use Controller\Service\Service;
+	
 	$dados = null;
-	if(isset($_GET['busca']) && !is_null($_GET))
-		$dados = $getCep->getEndereco($_GET['cep']);
+	$nomeLocal = null;
+	$cidade = null;
+	$id = null;
+	$service = new Service;
+
+	if(isset($_GET['acao']) && $_GET['acao'] == 'buscarcep'){
+		$dados = $service->buscarEnderecoPorCep($_GET['cep']);
+		$nomeLocal = $_GET['nome'];
+		$cidade = isset($dados['localidade']) ? $dados['localidade'] : null;
+	}
+	if(isset($_GET['acao']) && $_GET['acao'] == 'editar'){
+		$dados = $service->findById($_GET['id']);
+		$nomeLocal = $dados['nome'];
+		$cidade = $dados['cidade'];
+		$id = $_GET['id'];
+	}
+
 			
 ?>
 
@@ -11,6 +26,7 @@
 <html>
 <head>
 	<title>Cadastro</title>
+
 	<!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -21,25 +37,27 @@
 	
 
 	<script src="/View/jquery.mask.min.js"></script>
+	<script src="/View/eventos.js"></script>
 
 </head>
 <body style="margin-top: 50px;">
 
-	<form method="post" action="/salvar" onsubmit="return verificarCamposPreenchidos(this)">
-		
+	<form method="post" action="<?= isset($_GET['acao']) && $_GET['acao'] == 'editar' ? '/update' : '/salvar'?>" onsubmit="return verificarCamposPreenchidos(this)">
+		<a href="/" class="ml-5 text-warning">Voltar </a>
 		<div class="container">	
 			<h2 class="text-primary display-2 text-sm-center">Cadastro</h2>			
-			<div class="row form-group">
+			<div class="row form-group">				
 				<div class="col-sm-12">
 					<label for="nome" class="text-info">Nome do local visitado</label>
-					<input type="text" name="nome" id="nome" onblur="fieldEmpty(this)" maxlength="100"  class="form-control" value="<?= isset($_GET['busca']) && !empty($_GET['nome']) ? $_GET['nome'] : '' ?>">
+					<input type="text" name="nome" id="nome" onblur="fieldEmpty(this)" maxlength="100"  class="form-control" value="<?= isset($nomeLocal) && !empty($nomeLocal) ? $nomeLocal : '' ?>">
 				</div>
 			</div>
 			<hr>
 			<div class="row form-group">
 				<div class="col-sm-3">
 					<label for="cep" class="text-info">CEP</label>
-					<input type="text" name="cep" id="cep" maxlength="9" placeholder="Digite o cep para consulta" class="form-control"  value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['cep'] : '' ?>"
+					<input type="text" name="cep" id="cep" maxlength="8" placeholder="Digite o cep para consulta" class="form-control" value="<?= isset($dados['cep']) && !empty($dados['cep']) ? $dados['cep'] : '' ?>"
+						
 					 onblur="consultarCep()">
 				</div>
 				
@@ -47,11 +65,15 @@
 			<div class="row form-group">
 				<div class="col-sm-6">
 					<label for="logradouro" class="text-info">Logradouro</label>
-					<input type="text" name="logradouro" onblur="fieldEmpty(this)"  id="logradouro" class="form-control" value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['logradouro'] : '' ?>">
+					<input type="text" name="logradouro" onblur="fieldEmpty(this)"  id="logradouro" class="form-control"
+					 value="<?= isset($dados['logradouro']) && !empty($dados['logradouro']) ? $dados['logradouro'] : '' ?>"
+					>
 				</div>
 				<div class="col-sm-6">
-					<label for="nome" class="text-info">complemento</label>
-					<input type="text" name="complemento"  class="form-control" value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro'])? $dados['complemento'] : '' ?>">
+					<label for="complemento" class="text-info">complemento</label>
+					<input type="text" name="complemento"  class="form-control"
+					 value="<?= isset($dados['complemento']) && !empty($dados['complemento']) ? $dados['complemento'] : '' ?>"
+					>
 				</div>
 			</div>
 			<div class="row form-group">
@@ -61,26 +83,38 @@
 				</div>
 				<div class="col-sm-9">
 					<label for="bairro" class="text-info">Bairro</label>
-					<input type="text" name="bairro" id="bairro" onblur="fieldEmpty(this)"  class="form-control" value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['bairro'] : '' ?>">
+					<input type="text" name="bairro" id="bairro" onblur="fieldEmpty(this)"  class="form-control" 
+					value="<?= isset($dados['bairro']) && !empty($dados['bairro']) ? $dados['bairro'] : '' ?>"
+					>
 				</div>
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-3">
 				<label for="uf" class="text-info">Estado</label>				
-					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF" onblur="validarUf(this)" class="form-control" value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['uf'] : '' ?>">
+					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF" onblur="validarUf(this)" class="form-control"
+					 value="<?= isset($dados['uf']) && !empty($dados['uf']) ? $dados['uf'] : '' ?>"
+					 >
 				</div>
 				<div class="col-sm-6">
 					<label for="cidade" class="text-info">Cidade</label>
-					<input type="text" name="cidade"  id="cidade" onblur="fieldEmpty(this)" class="form-control" value="<?= isset($_GET['busca']) && is_array($dados) && !isset($dados['erro']) ? $dados['localidade'] : '' ?>">
+					<input type="text" name="cidade"  id="cidade" onblur="fieldEmpty(this)" class="form-control"
+					 value="<?= isset($cidade) && !empty($cidade) ? $cidade : '' ?>"
+					 >
 				</div>
 				<div class="col-sm-3">
 					<label for="data" class="text-info">Data da visita</label>
-					<input type="text" id="data" name="data" onblur="validarData()" maxlength="10" class="form-control" placeholder="Ex. 04/02/1999" >
+					<input type="text" id="data" name="data" onblur="validarData()" maxlength="10" class="form-control" placeholder="Ex. 04/02/1999" 
+					 value="<?= isset($dados['data']) && !empty($dados['data']) ? $dados['data'] : '' ?>"
+					>
 				</div>
 			</div>
-			<button class="btn btn-block btn-info">Cadastrar</button>
+			<button class="btn btn-block btn-info"><?= isset($_GET['acao']) && $_GET['acao'] == 'editar'  ? 'Atualizar' : 'Cadastrar'?></button>
+
 		</div>
-	</form>
+		<input type="hidden" name="id" value="<?= $id ?? '' ?>">
+
+		
+
 
 	<script type="text/javascript">	
 
@@ -95,9 +129,10 @@
 				currentDay = dataCurrent.getDate()
 				
 
+
 				if(fieldData[0] > 31 || fieldData[1] > 12 || fieldData[2] > currentYear || sizeData <10)
 					erro++
-				if(fieldData[2] == currentYear && fieldData[1] > currentMonth || (fieldData[0] > currentDay && fieldData[1] >= currentMonth))
+				if(fieldData[2] == currentYear && (fieldData[1] > currentMonth || (fieldData[0] > currentDay && fieldData[1] >= currentMonth)))
 					erro++
 				else{
 					switch(fieldData[1]){
@@ -137,44 +172,65 @@
 					$("#data").removeClass('is-invalid')
 					$("#data").addClass("is-valid")
 				}
+			}
+
+			function validaCep(cep){									
+				let cep2 = cep.replace(/[^0-9]/,'')
+				let qtdNumero = cep2.length									
+				let pattern = /[a-z]/
+				let testNumber = pattern.test(cep)
+				let nome = document.getElementById('nome').value			
+				if(testNumber || (qtdNumero > 0 && qtdNumero < 8)){				
+					$('#titlemodal').html('CEP invalido')
+					$('#msgcep').html('<p>Favor informar o cep no seguinte formato:<strong>73402042</strong><p>')
+					$('#modalerro').modal('show');
+					document.getElementById('cep').value = ''
+					return false
+				}			
+				else if(qtdNumero > 8){
+					$('#titlemodal').addClass('is-invalid')
+					$('#titlemodal').html('CEP invalido')
+					$('#msgcep').html('O campo cep deve possuir no <strong>máximo 8</strong> caracteres numericos')
+					$('#modalerro').modal('show');
+					document.getElementById('cep').value = ''
+					return false
+				}
+				return true				
 			}	
 
-			function consultarCep(){			
-			let cep = document.getElementById('cep').value			
-			let cep2 = cep.replace(/[^0-9]/,'')
-			let qtdNumero = cep2.length									
-			let pattern = /[a-z]/
-			let testNumber = pattern.test(cep)			
-			if(testNumber || (qtdNumero > 0 && qtdNumero < 8)){				
-				$('#titlemodal').html('CEP invalido')
-				$('#msgcep').html('Favor informar o cep seguindo um dos seguintes formatos:<br>73402-042<br>73402042<p>')
-				$('#modalerro').modal('show');
-				document.getElementById('cep').value = ''
-			}			
-			else if(qtdNumero > 8){
-				$('#titlemodal').addClass('is-invalid')
-				$('#titlemodal').html('CEP invalido')
-				$('#msgcep').html('O campo cep deve possuir no <strong>máximo 8</strong> caracteres numericos')
-				$('#modalerro').modal('show');
-				document.getElementById('cep').value = ''
+			function consultarCep(){						
+				let cep = document.getElementById('cep').value									
+					if(validaCep(cep) && cep != ''){
+						let url = '/cep?cep='+cep
+						let reqCep = new XMLHttpRequest()
+						reqCep.open('GET',url)
+						reqCep.onreadystatechange = () =>{
+							if(reqCep.readyState == 4 && reqCep.status == 200){								
+								let dados = reqCep.responseText			
+								let obj = JSON.parse(dados)								
+									if(obj.erro){
+										$('#titlemodal').html('CEP não encontrado')
+										$('#msgcep').html('<p>Não foi encontrado endereço para o cep <strong>'+cep+'</strong></p>')
+										$('#modalerro').modal('show');
+									}
+									else{
+										let cep = obj.cep
+										cep = cep.replace('-','')
+										document.getElementById('cep').value = cep
+										document.getElementById('logradouro').value = obj.logradouro
+										document.getElementById('bairro').value = obj.bairro
+										document.getElementById('cidade').value = obj.localidade
+										document.getElementById('uf').value = obj.uf
+									}									
+							}
+						}
+						reqCep.send()
+					}				
 			}
-			else{
-				if(cep2 != ''){
-				let nome = document.getElementById('nome').value
-				nome = nome != '' ? nome : ''
-				console.log(nome)		 	
-				 window.location.href='/cadastro?busca=true&cep='+cep2+'&nome='+nome
-				 
-				 
-				
-				}
-				
-			}
-		}
 
 
-		function validarUf(uf){
-			console.log('validarUF')			
+
+		function validarUf(uf){							
 			let estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO" ];
 			let findUf = estados.indexOf(uf.value.toUpperCase())
 			let regex = /[0-9]/;
@@ -280,32 +336,21 @@
 		
 	</script>
 
-	<?if(isset($dados['erro'])){ ?>
-		<script>
-			$(document).ready(
-				function(){
-					$('#modalerro').modal();
-				}
-				);
-
-		</script>		
-	<? } ?>
-
 	<!-- modal -->
 <div class="modal fade" id="modalerro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="titlemodal">CEP não encontrado</h5>
+        <h5 class="modal-title text-danger" id="titlemodal"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p id="msgcep">Verifique o cep informado!</p>
+        <p id="msgcep"></strong></p>        
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      <div class="modal-footer">       
+        <button type="button" class="btn btn-danger" data-dismiss="modal">fechar</button>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Controller\Service\Service;
+use Model\GetCep;
 
 class Controller{
 
@@ -14,21 +15,27 @@ class Controller{
 		$rota = $this->getURL();
 		switch ($rota) {
 		 	case '/':
-		 		# code...
+		 		require 'View/TelaLista.php';
 		 	break;
 		 	case '/cadastro':
 		 		require 'View/TelaCadastro.php';
-		 	break;
-		 	case '':
-		 		
-		 	break;
+		 	break;		 	
 		 	case '/salvar':
 		 		$service = new Service;
-		 		$service->save($_POST);
-		 		
+		 		$service->save($_POST);		 		
 		 	break;
-		 	
-		 	
+		 	case '/remove':
+		 		$service = new Service;
+		 		$service->delete($_GET['id']);
+		 	break;
+		 	case '/update':
+		 		$service = new Service;
+		 		$service->update($_POST);
+		 	break;
+		 	case '/cep':		 		
+		 		$cep = new GetCep;
+		 		$cep->getEndereco($_GET['cep']);
+		 		 	
 		 } 
 	}
 }

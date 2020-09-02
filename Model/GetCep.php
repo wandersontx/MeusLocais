@@ -9,11 +9,14 @@ class GetCep{
 
 
 
-	public function getEndereco($cep){
+	public function getEndereco($cep)
+	{
+		
 		try{		
-		$andressJson = HelperViaCep::getBuscaViaCEP('JSON',$cep);
-		$andress = json_decode($andressJson['text'], true);			
-		return $andress;
+			$andressJson = HelperViaCep::getBuscaViaCEP('JSON',$cep);
+			//return json_decode($andressJson['text'], true);
+			print_r( $andressJson['text']);	
+
 		}
 		catch(\Exception $e){
 			return "error";
