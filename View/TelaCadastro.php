@@ -113,13 +113,7 @@
 		</div>
 		<input type="hidden" name="id" value="<?= $id ?? '' ?>">
 
-		<?= $id ?? 'sem Id' ?>
-
-
-
-
-
-
+		
 
 
 	<script type="text/javascript">	
@@ -180,12 +174,7 @@
 				}
 			}
 
-			function validaCep(){
-			//implementar validação
-			}	
-
-			function consultarCep(){						
-				let cep = document.getElementById('cep').value			
+			function validaCep(cep){									
 				let cep2 = cep.replace(/[^0-9]/,'')
 				let qtdNumero = cep2.length									
 				let pattern = /[a-z]/
@@ -196,6 +185,7 @@
 					$('#msgcep').html('<p>Favor informar o cep no seguinte formato:<strong>73402042</strong><p>')
 					$('#modalerro').modal('show');
 					document.getElementById('cep').value = ''
+					return false
 				}			
 				else if(qtdNumero > 8){
 					$('#titlemodal').addClass('is-invalid')
@@ -203,21 +193,26 @@
 					$('#msgcep').html('O campo cep deve possuir no <strong>máximo 8</strong> caracteres numericos')
 					$('#modalerro').modal('show');
 					document.getElementById('cep').value = ''
+					return false
 				}
-				else{
-					
-					if(cep2 != ''){
-						let url = '/cep?cep='+cep2
+				return true
+				
+			}	
+
+			function consultarCep(){						
+				let cep = document.getElementById('cep').value									
+					if(validaCep(cep) && cep != ''){
+						let url = '/cep?cep='+cep
 						let reqCep = new XMLHttpRequest()
 						reqCep.open('GET',url)
 						reqCep.onreadystatechange = () =>{
-							if(reqCep.readyState == 4 && reqCep.status == 200){
-								
+							if(reqCep.readyState == 4 && reqCep.status == 200){								
 								let dados = reqCep.responseText			
-								let obj = JSON.parse(dados)
-								console.log(obj)
+								let obj = JSON.parse(dados)								
 									if(obj.erro){
-										console.log('error na busca ')
+										$('#titlemodal').html('CEP não encontrado')
+										$('#msgcep').html('<p>Não foi encontrado endereço para o cep <strong>'+cep+'</strong></p>')
+										$('#modalerro').modal('show');
 									}
 									else{
 										let cep = obj.cep
@@ -227,23 +222,16 @@
 										document.getElementById('bairro').value = obj.bairro
 										document.getElementById('cidade').value = obj.localidade
 										document.getElementById('uf').value = obj.uf
-									}
-
-								
-								
+									}									
 							}
 						}
-
 						reqCep.send()
-
-
 					}				
-				}
 			}
 
 
-		function validarUf(uf){
-			console.log('validarUF')			
+
+		function validarUf(uf){						
 			let estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO" ];
 			let findUf = estados.indexOf(uf.value.toUpperCase())
 			let regex = /[0-9]/;
@@ -349,29 +337,18 @@
 		
 	</script>
 
-	<?if(isset($dados['erro'])){ ?>
-		<script>
-			$(document).ready(
-				function(){
-					$('#modalerro').modal();
-				}
-				);
-
-		</script>		
-	<? } ?>
-
 	<!-- modal -->
 <div class="modal fade" id="modalerro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="titlemodal">CEP não encontrado</h5>
+        <h5 class="modal-title text-danger" id="titlemodal"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p id="msgcep">Verique o cep informado. </strong></p>        
+        <p id="msgcep"></strong></p>        
       </div>
       <div class="modal-footer">       
         <button type="button" class="btn btn-danger" data-dismiss="modal">fechar</button>
