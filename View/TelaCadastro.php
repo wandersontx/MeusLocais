@@ -38,6 +38,30 @@
 
 	<script src="/View/jquery.mask.min.js"></script>
 	<script src="/View/eventos.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$('#data').mask('00/00/0000')
+			$('#numero').mask('0000')
+
+			$('.fieldEmpty').blur(function(){
+				let id = $(this).attr("id");							
+				if($("#"+id).val() !=''){
+				    $("#"+id).removeClass('is-invalid')
+				    $("#"+id).addClass('is-valid')
+		
+				}else{		 
+				    $("#"+id).removeClass('is-valid')
+					$("#"+id).addClass('is-invalid')
+				}
+
+			})
+
+
+		})
+
+	</script>
+
 
 </head>
 <body style="margin-top: 50px;">
@@ -48,63 +72,56 @@
 			<h2 class="text-primary display-2 text-sm-center">Cadastro</h2>			
 			<div class="row form-group">				
 				<div class="col-sm-12">
-					<label for="nome" class="text-info">Nome do local visitado</label>
-					<input type="text" name="nome" id="nome" onblur="fieldEmpty(this)" maxlength="100"  class="form-control" value="<?= isset($nomeLocal) && !empty($nomeLocal) ? $nomeLocal : '' ?>">
+					<label for="nome" class="text-info ">Nome do local visitado</label>
+					<input type="text" name="nome" id="nome"  maxlength="100"  class="form-control fieldEmpty" value="<?= $nomeLocal ?? '' ?>">
 				</div>
 			</div>
 			<hr>
 			<div class="row form-group">
 				<div class="col-sm-3">
 					<label for="cep" class="text-info">CEP</label>
-					<input type="text" name="cep" id="cep" maxlength="8" placeholder="Digite o cep para consulta" class="form-control" value="<?= isset($dados['cep']) && !empty($dados['cep']) ? $dados['cep'] : '' ?>"
-						
-					 onblur="consultarCep()">
+					<input type="text" name="cep" id="cep" maxlength="8" placeholder="Digite o cep para consulta" class="form-control fieldEmpty" value="<?= $dados['cep'] ?? '' ?>" onblur="consultarCep()">
 				</div>
 				
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-6">
 					<label for="logradouro" class="text-info">Logradouro</label>
-					<input type="text" name="logradouro" onblur="fieldEmpty(this)"  id="logradouro" class="form-control"
-					 value="<?= isset($dados['logradouro']) && !empty($dados['logradouro']) ? $dados['logradouro'] : '' ?>"
-					>
+					<input type="text" name="logradouro" id="logradouro" class="form-control fieldEmpty"
+					 value="<?= $dados['logradouro'] ?? '' ?>">
 				</div>
 				<div class="col-sm-6">
-					<label for="complemento" class="text-info">complemento</label>
-					<input type="text" name="complemento"  class="form-control"
-					 value="<?= isset($dados['complemento']) && !empty($dados['complemento']) ? $dados['complemento'] : '' ?>"
-					>
+					<label for="complemento" class="text-info ">complemento</label>
+					<input type="text" name="complemento" class="form-control" value="<?= $dados['complemento'] ?? '' ?>">
 				</div>
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-3">
 					<label for="numero" class="text-info">Numero</label>
-					<input type="text" name="numero" id="numero" placeholder="Ex. 400" class="form-control" maxlength="4">
+					<input type="text" name="numero" id="numero" class="form-control" maxlength="4"
+					 value="<?= $dados['numero'] ?? '' ?>">
 				</div>
 				<div class="col-sm-9">
-					<label for="bairro" class="text-info">Bairro</label>
-					<input type="text" name="bairro" id="bairro" onblur="fieldEmpty(this)"  class="form-control" 
-					value="<?= isset($dados['bairro']) && !empty($dados['bairro']) ? $dados['bairro'] : '' ?>"
+					<label for="bairro" class="text-info ">Bairro</label>
+					<input type="text" name="bairro" id="bairro" class="form-control fieldEmpty" 
+					value="<?= $dados['bairro'] ?? '' ?>"
 					>
 				</div>
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-3">
 				<label for="uf" class="text-info">Estado</label>				
-					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF" onblur="validarUf(this)" class="form-control"
-					 value="<?= isset($dados['uf']) && !empty($dados['uf']) ? $dados['uf'] : '' ?>"
-					 >
+					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF" onblur="validarUf(this)" class="form-control fieldEmpty"  value="<?= $dados['uf'] ?? '' ?>">
 				</div>
 				<div class="col-sm-6">
 					<label for="cidade" class="text-info">Cidade</label>
-					<input type="text" name="cidade"  id="cidade" onblur="fieldEmpty(this)" class="form-control"
-					 value="<?= isset($cidade) && !empty($cidade) ? $cidade : '' ?>"
-					 >
+					<input type="text" name="cidade"  id="cidade" class="form-control fieldEmpty"
+					 value="<?= $dados['cidade'] ?? '' ?>">
 				</div>
 				<div class="col-sm-3">
 					<label for="data" class="text-info">Data da visita</label>
-					<input type="text" id="data" name="data" onblur="validarData()" maxlength="10" class="form-control" placeholder="Ex. 04/02/1999" 
-					 value="<?= isset($dados['data']) && !empty($dados['data']) ? $dados['data'] : '' ?>"
+					<input type="text" id="data" name="data"  maxlength="10" class="form-control fieldEmpty" placeholder="Ex. 04/02/2020" 
+					 value="<?= $dados['data'] ?? '' ?>"
 					>
 				</div>
 			</div>
@@ -117,7 +134,7 @@
 
 
 	<script type="text/javascript">	
-
+		
 			function validarData(){
 				let erro = 0
 				let sizeData = document.getElementById('data').value.length
@@ -127,9 +144,6 @@
 				currentYear = dataCurrent.getFullYear()
 				currentMonth = dataCurrent.getMonth() + 1
 				currentDay = dataCurrent.getDate()
-				
-
-
 				if(fieldData[0] > 31 || fieldData[1] > 12 || fieldData[2] > currentYear || sizeData <10)
 					erro++
 				if(fieldData[2] == currentYear && (fieldData[1] > currentMonth || (fieldData[0] > currentDay && fieldData[1] >= currentMonth)))
@@ -235,13 +249,10 @@
 			let findUf = estados.indexOf(uf.value.toUpperCase())
 			let regex = /[0-9]/;
 			let findLetter = uf.value.search(regex)
-			
-
 			if(uf.value == ''){
 				$('#uf').addClass('is-invalid')
 				document.getElementById('uf').value =''
 			}
-
 
 			if(findLetter != -1 && uf.value.length > 0){
 				$('#titlemodal').html('Dado incorreto')
@@ -263,28 +274,9 @@
 			$("#uf").removeClass('is-invalid')
 			$("#uf").addClass("is-valid")						}
 
-		}
-
-
-		$('#data').mask('00/00/0000')
-		$('#numero').mask('0000')
+		}		
 		
-	
-	function fieldEmpty(value){			
-		let field = value.value
-		let id = value.id
-		if(field !=''){
-		 $("#"+id).removeClass('is-invalid')
-		$("#"+id).addClass('is-valid')
-		
-		}
-		else{		 
-		 $("#"+id).removeClass('is-valid')
-		 $("#"+id).addClass('is-invalid')
 
-		
-		}
-	}
 
 	function verificarCamposPreenchidos(field){
 		let erro = 0
@@ -330,9 +322,6 @@
 		return true
 		
 	}
-	
-
-		
 		
 	</script>
 
