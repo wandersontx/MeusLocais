@@ -76,20 +76,6 @@ class Service
 
 	}
 
-	public function findAll()
-	{	
-		try{
-		$this->db = Database::getConnection();
-		$query = "select id, data, uf, nome from locais order by data desc";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();		
-		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-		}
-		catch(PDOException $e){
-			 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-		}
-	}
-
 	public function getRegistrosPorPagina($limit, $offeset){
 		try{
 		$this->db = Database::getConnection();
@@ -121,7 +107,8 @@ class Service
 		    	    locais";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
+		$total = $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $total['total'];
 
 
 	}

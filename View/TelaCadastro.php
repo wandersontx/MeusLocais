@@ -1,25 +1,12 @@
 <?php
 	use Controller\Service\Service;
-	
-	$dados = null;
-	$nomeLocal = null;
-	$cidade = null;
-	$id = null;
-	$service = new Service;
 
-	if(isset($_GET['acao']) && $_GET['acao'] == 'buscarcep'){
-		$dados = $service->buscarEnderecoPorCep($_GET['cep']);
-		$nomeLocal = $_GET['nome'];
-		$cidade = isset($dados['localidade']) ? $dados['localidade'] : null;
-	}
 	if(isset($_GET['acao']) && $_GET['acao'] == 'editar'){
-		$dados = $service->findById($_GET['id']);
-		$nomeLocal = $dados['nome'];
-		$cidade = $dados['cidade'];
+		$service = new Service;
+		$dados = $service->findById($_GET['id']);		
 		$id = $_GET['id'];
 	}
-
-			
+				
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +35,7 @@
 			<div class="row form-group">				
 				<div class="col-sm-12">
 					<label for="nome" class="text-info ">Nome do local visitado</label>
-					<input type="text" name="nome" id="nome"  maxlength="100"  class="form-control fieldEmpty" value="<?= $nomeLocal ?? '' ?>">
+					<input type="text" name="nome" id="nome"  maxlength="100"  class="form-control fieldEmpty" value="<?= $dados['nome'] ?? '' ?>">
 				</div>
 			</div>
 			<hr>

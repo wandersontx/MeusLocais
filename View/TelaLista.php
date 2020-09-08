@@ -2,15 +2,12 @@
 use Controller\Service\Service;
 $service = new Service;
 
-
-
 define("REGISTROS_POR_PAGINA", 6);
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $deslocamento = ($pagina -1 ) * REGISTROS_POR_PAGINA;
 $dados = $service->getRegistrosPorPagina(REGISTROS_POR_PAGINA, $deslocamento);
 $paginaAtiva = $pagina;
-$total_regs =  $service->getTotalRegistros();
-$totalRegistros =  $total_regs['total'];
+$totalRegistros =  $service->getTotalRegistros();
 $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 
 
@@ -88,9 +85,7 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 			</div>
 		</div>
 	</div>
-										
 				
-			
 			
 <div class="modal" tabindex="-1" id="modal_remover">
   <div class="modal-dialog">
