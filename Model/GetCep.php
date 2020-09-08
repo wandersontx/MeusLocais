@@ -7,8 +7,6 @@ use Jarouche\ViaCEP\HelperViaCep;
 
 class GetCep{
 
-
-
 	public function getEndereco($cep)
 	{
 		

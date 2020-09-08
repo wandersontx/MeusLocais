@@ -1,7 +1,19 @@
 <?php 
 use Controller\Service\Service;
 $service = new Service;
-$dados = $service->findAll();
+
+
+
+define("REGISTROS_POR_PAGINA", 6);
+$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+$deslocamento = ($pagina -1 ) * REGISTROS_POR_PAGINA;
+$dados = $service->getRegistrosPorPagina(REGISTROS_POR_PAGINA, $deslocamento);
+$paginaAtiva = $pagina;
+$total_regs =  $service->getTotalRegistros();
+$totalRegistros =  $total_regs['total'];
+$totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +31,13 @@ $dados = $service->findAll();
 
 	<script src="/View/jquery.mask.min.js"></script>
 	<script src="/View/eventos.js"></script>
+
+	<style type="text/css">
+		.centered {
+    margin: 0 auto !important;
+    float: none !important;
+		}
+	</style>
 </head>
 <body style="margin: 40px;">
  
@@ -52,8 +71,27 @@ $dados = $service->findAll();
  	</tr>
  	<? } ?>
  </table>
-</div>
-
+ 	<div class="container text-sm-center">
+ 		<div class="row ">			
+			<div class="row mt-3 mb-3 centered">			 				
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item"><a href="?pagina=1" class="page-link" href="#">Primeira</a></li>
+						<?php for($i = 1; $i <= $totalPaginas ; $i++){ ?>
+							<li class="page-item <?= $paginaAtiva == $i ? 'active' : '' ?>">
+								<a class="page-link" href="?pagina=<?= $i?>"><?= $i?></a>
+							</li>
+						<?php } ?>
+						<li class="page-item"><a href="?pagina=<?= $totalPaginas?>" class="page-link" href="#">Ultima </a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+										
+				
+			
+			
 <div class="modal" tabindex="-1" id="modal_remover">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -72,6 +110,7 @@ $dados = $service->findAll();
       </div>
     </div>
   </div>
+</div>
 </div>
 
 </body>

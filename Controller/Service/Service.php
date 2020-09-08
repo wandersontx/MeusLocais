@@ -2,7 +2,6 @@
 
 
 namespace Controller\Service;
-use Controller\MeuLocal;
 use Model\Database;
 use Model\GetCep;
 require "Validation.php";
@@ -16,8 +15,7 @@ class Service
 
 	public function save($dadosForm)
 	{	
-		if(validateDate($dadosForm))
-		{
+		if(validateDate($dadosForm)) {
 			$this->db = Database::getConnection();
 			$query = "insert into locais 
 			(nome, cep, logradouro, complemento, numero, bairro, uf, cidade, data)
@@ -92,6 +90,42 @@ class Service
 		}
 	}
 
+	public function getRegistrosPorPagina($limit, $offeset){
+		try{
+		$this->db = Database::getConnection();
+		$query = "SELECT 
+					id, data, uf, nome 
+				  FROM 
+				    locais				  
+				  ORDER BY 
+				    data desc
+				  LIMIT
+				    $limit
+                  OFFSET
+                    $offeset
+				   ";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();		
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e){
+			 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+		}
+	}
+
+	public function getTotalRegistros(){
+		$this->db = Database::getConnection();
+		$query = "SELECT 
+		    		COUNT(*) as total
+		    	  FROM 
+		    	    locais";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+
+	}
+
 	public function findById($id)
 	{
 		try{
@@ -127,8 +161,7 @@ class Service
 
 	public function buscarEnderecoPorCep($cep){
 		$getCep = new GetCep;
-		return $getCep->getEndereco($cep);
-		//print_r($result);
+		return $getCep->getEndereco($cep);		
 	}
 
 		
