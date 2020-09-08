@@ -31,42 +31,17 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 <!-- JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	
 
 	<script src="/View/jquery.mask.min.js"></script>
-	<script src="/View/eventos.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-
-			$('#data').mask('00/00/0000')
-			$('#numero').mask('0000')
-
-			$('.fieldEmpty').blur(function(){
-				let id = $(this).attr("id");							
-				if($("#"+id).val() !=''){
-				    $("#"+id).removeClass('is-invalid')
-				    $("#"+id).addClass('is-valid')
-		
-				}else{		 
-				    $("#"+id).removeClass('is-valid')
-					$("#"+id).addClass('is-invalid')
-				}
-
-			})
-
-
-		})
-
-	</script>
-
-
+ 	<script src="/View/js/TelaCadastro.js"></script>
 </head>
 <body style="margin-top: 50px;">
 
-	<form method="post" action="<?= isset($_GET['acao']) && $_GET['acao'] == 'editar' ? '/update' : '/salvar'?>" onsubmit="return verificarCamposPreenchidos(this)">
+	<form method="post" action="<?= isset($_GET['acao']) && $_GET['acao'] == 'editar' ? '/update' : '/salvar'?>" >
 		<a href="/" class="ml-5 text-warning">Voltar </a>
 		<div class="container">	
 			<h2 class="text-primary display-2 text-sm-center">Cadastro</h2>			
@@ -80,7 +55,7 @@
 			<div class="row form-group">
 				<div class="col-sm-3">
 					<label for="cep" class="text-info">CEP</label>
-					<input type="text" name="cep" id="cep" maxlength="8" placeholder="Digite o cep para consulta" class="form-control fieldEmpty" value="<?= $dados['cep'] ?? '' ?>" onblur="consultarCep()">
+					<input type="text" name="cep" id="cep" maxlength="8" placeholder="Digite o cep para consulta" class="form-control fieldEmpty" value="<?= $dados['cep'] ?? '' ?>">
 				</div>
 				
 			</div>
@@ -98,7 +73,7 @@
 			<div class="row form-group">
 				<div class="col-sm-3">
 					<label for="numero" class="text-info">Numero</label>
-					<input type="text" name="numero" id="numero" class="form-control" maxlength="4"
+					<input type="text" name="numero" class="form-control" maxlength="4"
 					 value="<?= $dados['numero'] ?? '' ?>">
 				</div>
 				<div class="col-sm-9">
@@ -111,7 +86,7 @@
 			<div class="row form-group">
 				<div class="col-sm-3">
 				<label for="uf" class="text-info">Estado</label>				
-					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF" onblur="validarUf(this)" class="form-control fieldEmpty"  value="<?= $dados['uf'] ?? '' ?>">
+					<input type="text" maxlength="2" name="uf" id="uf" placeholder="EX. DF"  class="form-control fieldEmpty"  value="<?= $dados['uf'] ?? '' ?>">
 				</div>
 				<div class="col-sm-6">
 					<label for="cidade" class="text-info">Cidade</label>
@@ -120,213 +95,17 @@
 				</div>
 				<div class="col-sm-3">
 					<label for="data" class="text-info">Data da visita</label>
-					<input type="text" id="data" name="data"  maxlength="10" class="form-control fieldEmpty" placeholder="Ex. 04/02/2020" 
-					 value="<?= $dados['data'] ?? '' ?>"
-					>
+					<input type="text" id="data" name="data"  maxlength="10" class="form-control fieldEmpty" placeholder="Ex. 04/02/2020" value="<?= $dados['data'] ?? '' ?>">
 				</div>
 			</div>
-			<button class="btn btn-block btn-info"><?= isset($_GET['acao']) && $_GET['acao'] == 'editar'  ? 'Atualizar' : 'Cadastrar'?></button>
+			<button id="btnSave" class="btn btn-block btn-info"><?= isset($_GET['acao']) && $_GET['acao'] == 'editar'  ? 'Atualizar' : 'Cadastrar'?></button>
 
 		</div>
-		<input type="hidden" name="id" value="<?= $id ?? '' ?>">
+		<input type="hidden" name="id" value="<?= $id ?? '' ?>">	
 
-		
-
-
-	<script type="text/javascript">	
-		
-			function validarData(){
-				let erro = 0
-				let sizeData = document.getElementById('data').value.length
-				let dataForm = document.getElementById('data').value
-				let fieldData = dataForm.split("/")
-				let dataCurrent = new Date()
-				currentYear = dataCurrent.getFullYear()
-				currentMonth = dataCurrent.getMonth() + 1
-				currentDay = dataCurrent.getDate()
-				if(fieldData[0] > 31 || fieldData[1] > 12 || fieldData[2] > currentYear || sizeData <10)
-					erro++
-				if(fieldData[2] == currentYear && (fieldData[1] > currentMonth || (fieldData[0] > currentDay && fieldData[1] >= currentMonth)))
-					erro++
-				else{
-					switch(fieldData[1]){
-						case '01': case '03': case '05': case '07': case '08': case '10': case '12':
-							erro = fieldData[0] > 31 ? 1 : 0							
-						break;
-						case '04': case '06': case '09': case '11':
-							erro = fieldData[0] > 30 ? 1 : 0
-							
-						break;
-						case '02':
-						let anobissesto = fieldData[2]%4 == 0  && fieldData[2]%100 != 0? true : false
-							if(anobissesto)
-								erro = fieldData[0] > 29 ? 1 : 0
-							else
-								erro = fieldData[0] > 28 ? 1 : 0
-
-					}
-
-				}
-
-				if(erro > 0 && sizeData > 0){
-					$('#titlemodal').html('Erro no campo data')
-					$('#msgcep').html('Data informada <strong>"'+dataForm+'"</strong> inválida ou superior a data atual')
-					$('#modalerro').modal('show');
-					$("#data").removeClass('is-valid')
-					$("#data").addClass("is-invalid")
-					document.getElementById('data').value = ''
-					return false
-				}
-				else if(dataForm == ''){
-					$("#data").removeClass('is-valid')
-					$("#data").addClass("is-invalid")
-					
-				}
-				else{
-					$("#data").removeClass('is-invalid')
-					$("#data").addClass("is-valid")
-				}
-			}
-
-			function validaCep(cep){									
-				let cep2 = cep.replace(/[^0-9]/,'')
-				let qtdNumero = cep2.length									
-				let pattern = /[a-z]/
-				let testNumber = pattern.test(cep)
-				let nome = document.getElementById('nome').value			
-				if(testNumber || (qtdNumero > 0 && qtdNumero < 8)){				
-					$('#titlemodal').html('CEP invalido')
-					$('#msgcep').html('<p>Favor informar o cep no seguinte formato:<strong>73402042</strong><p>')
-					$('#modalerro').modal('show');
-					document.getElementById('cep').value = ''
-					return false
-				}			
-				else if(qtdNumero > 8){
-					$('#titlemodal').addClass('is-invalid')
-					$('#titlemodal').html('CEP invalido')
-					$('#msgcep').html('O campo cep deve possuir no <strong>máximo 8</strong> caracteres numericos')
-					$('#modalerro').modal('show');
-					document.getElementById('cep').value = ''
-					return false
-				}
-				return true				
-			}	
-
-			function consultarCep(){						
-				let cep = document.getElementById('cep').value									
-					if(validaCep(cep) && cep != ''){
-						let url = '/cep?cep='+cep
-						let reqCep = new XMLHttpRequest()
-						reqCep.open('GET',url)
-						reqCep.onreadystatechange = () =>{
-							if(reqCep.readyState == 4 && reqCep.status == 200){								
-								let dados = reqCep.responseText			
-								let obj = JSON.parse(dados)								
-									if(obj.erro){
-										$('#titlemodal').html('CEP não encontrado')
-										$('#msgcep').html('<p>Não foi encontrado endereço para o cep <strong>'+cep+'</strong></p>')
-										$('#modalerro').modal('show');
-									}
-									else{
-										let cep = obj.cep
-										cep = cep.replace('-','')
-										document.getElementById('cep').value = cep
-										document.getElementById('logradouro').value = obj.logradouro
-										document.getElementById('bairro').value = obj.bairro
-										document.getElementById('cidade').value = obj.localidade
-										document.getElementById('uf').value = obj.uf
-									}									
-							}
-						}
-						reqCep.send()
-					}				
-			}
-
-
-
-		function validarUf(uf){							
-			let estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO" ];
-			let findUf = estados.indexOf(uf.value.toUpperCase())
-			let regex = /[0-9]/;
-			let findLetter = uf.value.search(regex)
-			if(uf.value == ''){
-				$('#uf').addClass('is-invalid')
-				document.getElementById('uf').value =''
-			}
-
-			if(findLetter != -1 && uf.value.length > 0){
-				$('#titlemodal').html('Dado incorreto')
-				$('#msgcep').html('<p>O campo estado deve conter a sigla do estado, contendo apenas letras. Como por exemplo: DF, MG, SP ..</p>')
-				$('#modalerro').modal('show');
-				$("#uf").removeClass('is-valid')
-				$("#uf").addClass("is-invalid")
-				document.getElementById('uf').value =''				
-			}
-			else if(findUf == -1 && uf.value.length > 0){
-				$('#titlemodal').html('Estado não encontrado')
-				$('#msgcep').html('<p>A sigla informada <strong>"'+uf.value.toUpperCase()+'"</strong> não corresponde a nenhum estado.</p>')
-				$('#modalerro').modal('show');
-				$("#uf").removeClass('is-valid')
-				$("#uf").addClass("is-invalid")
-				document.getElementById('uf').value =''				
-			}
-			else if(findUf != -1){
-			$("#uf").removeClass('is-invalid')
-			$("#uf").addClass("is-valid")						}
-
-		}		
-		
-
-
-	function verificarCamposPreenchidos(field){
-		let erro = 0
-		if(field.nome.value == ''){
-			erro++;
-			$('#nome').addClass('is-invalid')
-		}
-		if(field.cep.value == ''){
-			erro++;
-			$('#cep').addClass('is-invalid')
-		}
-		if(field.logradouro.value == ''){
-			erro++;
-			$('#logradouro').addClass('is-invalid')
-		}
-		if(field.bairro.value == ''){
-			erro++;
-			$('#bairro').addClass('is-invalid')
-		}
-		if(field.uf.value == ''){
-			erro++;
-			$('#uf').addClass('is-invalid')
-		}
-		if(field.cidade.value == ''){
-			erro++;
-			$('#cidade').addClass('is-invalid')
-		}
-		if(field.data.value.trim() == ''){
-			erro++;
-			$('#data').addClass('is-invalid')
-		}else{
-			validarData()			
-		}	
-
-
-		if(erro > 0){
-			var msg = erro > 1 ? erro : ''
-			$('#titlemodal').html('Campos obrigatórios não preenchidos')
-			$('#msgcep').html('<p>Favor preencher o(s) '+msg+' campo(s) em destaque vermelho.</p>')
-			$('#modalerro').modal('show');
-			return false
-		}
-		return true
-		
-	}
-		
-	</script>
 
 	<!-- modal -->
-<div class="modal fade" id="modalerro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalerro" tabindex="-1" aria-labelledby="modalmsgs" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
