@@ -24,18 +24,18 @@ class Service
 			value 
 			(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(1, $dadosForm['nome']);
-			$stmt->bindValue(2, str_replace("-", "", $dadosForm['cep']));
-			$stmt->bindValue(3, $dadosForm['logradouro']);
-			$stmt->bindValue(4, $dadosForm['complemento']);
-			$stmt->bindValue(5, $dadosForm['numero']);
-			$stmt->bindValue(6, $dadosForm['bairro']);
-			$stmt->bindValue(7, $dadosForm['uf']);
-			$stmt->bindValue(8, $dadosForm['cidade']);
+			$stmt->bindValue(1, htmlspecialchars($dadosForm['nome']));
+			$stmt->bindValue(2, htmlspecialchars($dadosForm['cep']));
+			$stmt->bindValue(3, htmlspecialchars($dadosForm['logradouro']));
+			$stmt->bindValue(4, htmlspecialchars($dadosForm['complemento']));
+			$stmt->bindValue(5, htmlspecialchars($dadosForm['numero']));
+			$stmt->bindValue(6, htmlspecialchars($dadosForm['bairro']));
+			$stmt->bindValue(7, htmlspecialchars($dadosForm['uf']));
+			$stmt->bindValue(8, htmlspecialchars($dadosForm['cidade']));
 			
 			$fieldData = explode("/",$dadosForm['data']);
 			$data = "$fieldData[2]-$fieldData[1]-$fieldData[0]";			
-			$stmt->bindValue(9, $data );	 
+			$stmt->bindValue(9, htmlspecialchars($data));	 
 			
 			$row =  $stmt->execute();
 
@@ -57,19 +57,19 @@ class Service
 				  where id = :id
 				 ";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(":nome", $dados['nome']);
-		$stmt->bindValue(":cep", $dados['cep']);
-		$stmt->bindValue(":logradouro", $dados['logradouro']);
-		$stmt->bindValue(":complemento", $dados['complemento']);
-		$stmt->bindValue(":numero", $dados['numero']);
-		$stmt->bindValue(":bairro", $dados['bairro']);
-		$stmt->bindValue(":uf", $dados['uf']);
-		$stmt->bindValue(":cidade", $dados['cidade']);
-		$stmt->bindValue(":id", $dados['id']);
+		$stmt->bindValue(":nome", htmlspecialchars($dados['nome']));
+		$stmt->bindValue(":cep", htmlspecialchars($dados['cep']));
+		$stmt->bindValue(":logradouro", htmlspecialchars($dados['logradouro']));
+		$stmt->bindValue(":complemento", htmlspecialchars($dados['complemento']));
+		$stmt->bindValue(":numero", htmlspecialchars($dados['numero']));
+		$stmt->bindValue(":bairro", htmlspecialchars($dados['bairro']));
+		$stmt->bindValue(":uf", htmlspecialchars($dados['uf']));
+		$stmt->bindValue(":cidade", htmlspecialchars($dados['cidade']));
+		$stmt->bindValue(":id", htmlspecialchars($dados['id']));
 
 		$dataForm = explode("/", $dados['data']);
 		$data_bd = $dataForm[2]."-".$dataForm[1]."-".$dataForm[0];
-		$stmt->bindValue(":data", $data_bd);
+		$stmt->bindValue(":data", htmlspecialchars($data_bd));
 
 		$row = $stmt->execute();
 
