@@ -1,8 +1,7 @@
 <?php
    
    function validateDate($dados)
-	{
-		
+	{		
 		$is_valid = GUMP::is_valid(
 			array_merge($dados, $_FILES),
 			[
@@ -27,11 +26,5 @@
 			]
 		);
 
-		if ($is_valid === true) {
-		    return true;
-		} else {
-		    return false;
-		}
-
-
+		return $is_valid;
 	}

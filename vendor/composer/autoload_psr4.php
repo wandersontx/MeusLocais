@@ -7,8 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'View\\' => array($baseDir . '/View'),
-    'Model\\' => array($baseDir . '/Model'),
     'Jarouche\\ViaCEP\\' => array($vendorDir . '/jarouche/viacep/src'),
     'GUMP\\' => array($vendorDir . '/wixel/gump/src'),
+    'DataBase\\' => array($baseDir . '/DataBase'),
     'Controller\\' => array($baseDir . '/Controller'),
 );

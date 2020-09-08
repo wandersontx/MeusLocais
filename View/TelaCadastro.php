@@ -1,12 +1,12 @@
 <?php
 	use Controller\Service\Service;
 
-	if(isset($_GET['acao']) && $_GET['acao'] == 'editar'){
+	if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
 		$service = new Service;
 		$dados = $service->findById($_GET['id']);		
 		$id = $_GET['id'];
 	}
-				
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	
 
-	<script src="/View/jquery.mask.min.js"></script>
+	<script src="/View/js/jquery.mask.min.js"></script>
  	<script src="/View/js/TelaCadastro.js"></script>
 </head>
 <body style="margin-top: 50px;">

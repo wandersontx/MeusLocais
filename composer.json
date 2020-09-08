@@ -15,7 +15,7 @@
     "autoload":{
         "psr-4":{
             "Controller\\":"Controller/",
-            "Model\\":"Model/",
+            "DataBase\\":"DataBase/",
             "View\\":"View/"
         }
     }

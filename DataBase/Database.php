@@ -1,18 +1,19 @@
 <?php
-namespace Model;
+namespace DataBase;
 
-class Database{	
+class Database
+{	
 	
-	public  function getConnection(){
-		try{
+	public  function getConnection()
+	{
+		try {
 			$connection = new \PDO(
 				"mysql:host=localhost;dbname=meus_locais;charset=utf8",
 				"root",
 				""
 			);
 			return $connection;
-		}
-		catch(\PDOException $e){
+		} catch(\PDOException $e) {
 			print_r($e);
 		}
 	}	

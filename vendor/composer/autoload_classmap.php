@@ -6,20 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Controller\\Controller' => $baseDir . '/Controller/Controller.php',
-    'Controller\\MeuLocal' => $baseDir . '/Controller/MeuLocal.php',
-    'Controller\\Service\\Service' => $baseDir . '/Controller/Service/Service.php',
-    'GUMP\\ArrayHelpers' => $vendorDir . '/wixel/gump/src/ArrayHelpers.php',
-    'GUMP\\EnvHelpers' => $vendorDir . '/wixel/gump/src/EnvHelpers.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPJSON' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEPJSON.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPJSONP' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEPJSONP.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPLogradouro' => $vendorDir . '/jarouche/viacep/src/BuscaVIaCEPLogradouro.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPPiped' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEPPiped.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPQuerty' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEPQuerty.php',
-    'Jarouche\\ViaCEP\\BuscaViaCEPXML' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEPXML.php',
-    'Jarouche\\ViaCEP\\HelperViaCep' => $vendorDir . '/jarouche/viacep/src/HelperViaCep.php',
-    'Jarouche\\ViaCEP\\ViaCEPInterface' => $vendorDir . '/jarouche/viacep/src/ViaCEPInterface.php',
-    'Jarouche\\ViaCEP\\buscaViaCEP' => $vendorDir . '/jarouche/viacep/src/BuscaViaCEP.php',
-    'Model\\Database' => $baseDir . '/Model/Database.php',
-    'Model\\GetCep' => $baseDir . '/Model/GetCep.php',
 );

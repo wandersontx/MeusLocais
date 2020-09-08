@@ -1,5 +1,7 @@
 <?php 
+
 use Controller\Service\Service;
+
 $service = new Service;
 
 define("REGISTROS_POR_PAGINA", 6);
@@ -9,7 +11,6 @@ $dados = $service->getRegistrosPorPagina(REGISTROS_POR_PAGINA, $deslocamento);
 $paginaAtiva = $pagina;
 $totalRegistros =  $service->getTotalRegistros();
 $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
-
 
 ?>
 
@@ -25,14 +26,10 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	
-
-	<script src="/View/jquery.mask.min.js"></script>
-	<script src="/View/eventos.js"></script>
-
 	<style type="text/css">
 		.centered {
-    margin: 0 auto !important;
-    float: none !important;
+		    margin: 0 auto !important;
+		    float: none !important;
 		}
 	</style>
 </head>
@@ -74,7 +71,7 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<li class="page-item"><a href="?pagina=1" class="page-link" href="#">Primeira</a></li>
-						<?php for($i = 1; $i <= $totalPaginas ; $i++){ ?>
+						<?php for ($i = 1; $i <= $totalPaginas ; $i++) { ?>
 							<li class="page-item <?= $paginaAtiva == $i ? 'active' : '' ?>">
 								<a class="page-link" href="?pagina=<?= $i?>"><?= $i?></a>
 							</li>
