@@ -12,6 +12,9 @@ Meus Locais
   * Atualizar endereço 
   * Deletar endereço
   * Visualizar locais cadastrados
+  * Busca endereço por cep
+  * Máscara para formatação dos campos cep,  data e UF.
+  * validação dos campos obrigatorios.
   
 
 ###  __Technologies__
