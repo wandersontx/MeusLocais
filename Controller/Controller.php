@@ -33,11 +33,7 @@ class Controller
 		 		break;
 		 	case '/update':
 		 		$service = new Service;
-		 		$service->update($_POST);
-		 		break;
-		 	case '/cep':		 		
-		 		$cep = new GetCep;
-		 		$cep->getEndereco($_GET['cep']);		 		 	
+		 		$service->update($_POST);		 		 		 	
 		} 
 	}
 }

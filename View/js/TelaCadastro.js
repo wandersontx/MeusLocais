@@ -110,13 +110,9 @@
 			//Pesquisar cep
 			$("#cep").on('blur',e => {
 				const CEP = $(e.target).val()
-				if(validarCep(CEP)){
-					$.ajax({
-						type:'GET',
-						url :'/cep',
-						data:'cep='+CEP,
-						dataType:'json',
-						success: dados =>{
+				if(validarCep(CEP)){					
+					$.getJSON("https://viacep.com.br/ws/"+CEP+"/json/?callback=?", function(dados){
+						if(!("erro" in dados)){
 							let cep = dados.cep != undefined ? dados.cep.replace("-","") : null							
 							$('#cep').val(cep)
 							$('#logradouro').val(dados.logradouro)
@@ -125,15 +121,13 @@
 							$('#cidade').val(dados.localidade)
 							let arrField = ["cep","logradouro", "bairro", "uf","cidade"]
 							if(!dados.erro){validField(arrField)}
-							if(dados.erro){
-								$('#titlemodal').html('CEP não encontrado')
-								$('#msgcep').html('<p>Não foi encontrado endereço para o cep <strong>'+CEP+'</strong>.<p>')
-								$('#modalerro').modal('show');
-							}
-						},
-						error: erro => { console.log(erro)}
 
-					})
+						}else{
+							$('#titlemodal').html('CEP não encontrado')
+							$('#msgcep').html('<p>Não foi encontrado endereço para o cep <strong>'+CEP+'</strong>.<p>')
+							$('#modalerro').modal('show');
+						}
+					});
 				}
 			 	
 			})

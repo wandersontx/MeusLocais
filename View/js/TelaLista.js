@@ -9,9 +9,3 @@ $(document).ready(function(){
   	 	$('#modal_remover').modal('show');
 	});
 })
-
-
-// /remove?id=$varival
-////$('img').attr('src','img/esfera_2.png')
-//$('#modal_title').html('CEP não encontrado')
-//								$('#msgcep').html('
