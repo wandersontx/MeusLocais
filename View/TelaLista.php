@@ -32,6 +32,7 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 		    float: none !important;
 		}
 	</style>
+	<script src="/View/js/TelaLista.js"></script>
 </head>
 <body style="margin: 40px;">
  
@@ -47,7 +48,7 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
  		<th>Nome</th>
  		<th>Ações</th>
  	</tr>
- 	<? foreach ($dados as $key => $value) { ?> 	
+ 	<?php foreach ($dados as $key => $value) { ?> 	
  	<tr>
 		<td><?php
 				$date = new DateTime($value["data"]);
@@ -60,10 +61,10 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
 		<td>
 			<a href="/cadastro?acao=editar&id=<?= $value['id'] ?>" class="btn btn-info">Atualizar</a>
 
-			<button value="<?= $value['id'] ?>" class="btn btn-outline-danger remove">Remover</button>
+			<button value="<?= $value['id'] ?>" class="btn btn-outline-danger remove btn_remove" >Remover</button>
 		</td>
  	</tr>
- 	<? } ?>
+ 	<?php } ?>
  </table>
  	<div class="container text-sm-center">
  		<div class="row ">			
@@ -98,7 +99,7 @@ $totalPaginas = ceil($totalRegistros / REGISTROS_POR_PAGINA);
       </div>
       <div class="modal-footer">
         <a href="/" class="btn btn-info" data-dismiss="modal">Não</a>
-        <a id="btn_remove" class="btn btn-outline-danger btn-sm">Sim</a>
+        <a id="btn_remove_sim" class="btn btn-outline-danger btn-sm">Sim</a>
       </div>
     </div>
   </div>
